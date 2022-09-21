@@ -29,11 +29,18 @@
 }}
 <div id="mod-tipnextcloud-main-view" data-region="main_view" data-component="mod-tipnextcloud-main">
 
+    {{{ desc }}}
+
+    <br>
+
+    <div id="file_url_button" data-region="file_url">
+        <a href="{{ url }}"  class="btn btn-primary" target="_blank">{{# str }} url_button, mod_tipnextcloud, {{ typename }} {{/ str }}</a>
+    </div>
+
     <br>
     <br>
 
-    <div class="alert alert-{{ level }} text-center" role="alert">
-        {{ msg }}
-    </div>
+    <div class="hide_header"></div>
+    <iframe id="file_nextcloud_iframe" class='tipnc-iframe' src="{{ url }}" width="100%" height="800px" align="top" frameborder="0"></iframe>
 
 </div>

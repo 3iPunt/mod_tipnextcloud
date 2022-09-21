@@ -24,6 +24,9 @@
 
 namespace mod_tipnextcloud\output;
 
+use coding_exception;
+use dml_exception;
+use mod_tipnextcloud\tipnextcloud;
 use renderable;
 use renderer_base;
 use stdClass;
@@ -55,10 +58,17 @@ class main_view implements renderable, templatable {
      *
      * @param renderer_base $output
      * @return false|stdClass|string
+     * @throws coding_exception
+     * @throws dml_exception
      */
     public function export_for_template(renderer_base $output) {
+        $tipnextcloud = new tipnextcloud($this->cm);
+
         $data = new stdClass();
-        $data->title = $this->cm->name;
+        $data->title = $tipnextcloud->get_title();
+        $data->desc = $tipnextcloud->get_description();
+        $data->url = $tipnextcloud->get_url();
+        $data->typename = $tipnextcloud->get_typename();
         return $data;
     }
 

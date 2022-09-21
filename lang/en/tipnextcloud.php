@@ -39,3 +39,4 @@ $string['type_file'] = 'File';
 $string['type_folder'] = 'Folder';
 $string['file_url'] = 'File URL in NextCloud';
 $string['file_url_help'] = 'Copy and paste the URL link of the NextCloud file or folder';
+$string['url_button'] = 'View {$a} in NextCloud';

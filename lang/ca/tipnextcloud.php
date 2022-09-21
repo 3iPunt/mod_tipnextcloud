@@ -39,3 +39,4 @@ $string['type_file'] = 'Fitxer';
 $string['type_folder'] = 'Carpeta';
 $string['file_url'] = 'URL del fitxer a NextCloud';
 $string['file_url_help'] = "Copieu i enganxeu l'enllaç de la URL del fitxer o carpeta de NextCloud";
+$string['url_button'] = 'Veure {$a} a NextCloud';

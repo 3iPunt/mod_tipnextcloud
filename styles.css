@@ -1,8 +1,31 @@
 #mod-tipnextcloud-main-view {
     display: flex;
     width: 100%;
+    flex-direction: column;
+}
+#mod-tipnextcloud-main-view p {
+    width: 100%;
 }
 
 #mod-tipnextcloud-main-view .alert {
     width: 100%;
+}
+
+
+#mod-tipnextcloud-main-view #file_nextcloud_iframe {
+    position: relative;
+    top: -128px;
+    border: 2px solid #ebebeb;
+}
+
+#mod-tipnextcloud-main-view .hide_header {
+    background-color: #fff;
+    height: 76px;
+    position: relative;
+    top: -76px;
+    z-index: 10;
+}
+
+#mod-tipnextcloud-main-view #file_url_button {
+    z-index: 100;
 }
