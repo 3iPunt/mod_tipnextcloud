@@ -13,7 +13,7 @@ Aquest plugin permet integrar un fitxer o carpeta de Nextcloud en un recurs de M
 
 This plugin version is tested for:
 
-* Moodle 3.11.8+ (Build: 20220805) - 2021051708.04
+* Moodle 3.11.8+ (Build: 20220805) - 2022092000
 
 
 ## Installing via uploaded ZIP file ##

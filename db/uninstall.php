@@ -15,27 +15,17 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin strings are defined here 'en'.
+ * Code that is executed before the tables and data are dropped during the plugin uninstallation.
  *
  * @package     mod_tipnextcloud
- * @category    string
+ * @category    upgrade
  * @copyright   2022 Tresipunt - Antonio Manzano <contacte@tresipunt.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-$string['pluginname'] = 'TIP NextCloud';
-$string['modulename'] = 'TIP NextCloud';
-$string['modulenameplural'] = 'NextCloud Files';
-$string['missingidandcmid'] = 'Course module not found';
-$string['nonewmodules'] = 'There are no new Modules';
-$string['pluginadministration'] = 'Administration TIP Nextcloud';
-$string['tipnextcloud:addinstance'] = 'Add TIP Nextcloud instance';
-$string['tipnextcloud:view'] = 'View TIP Nextcloud';
-$string['type'] = 'Type';
-$string['type_help'] = 'Select the type of resource: file or folder';
-$string['type_file'] = 'File';
-$string['type_folder'] = 'Folder';
-$string['file_url'] = 'File URL in NextCloud';
-$string['file_url_help'] = 'Copy and paste the URL link of the NextCloud file or folder';
+/**
+ * Custom uninstallation procedure.
+ */
+function mod_tipnextcloud_uninstall() {
+    return true;
+}

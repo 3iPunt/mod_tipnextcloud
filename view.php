@@ -78,7 +78,7 @@ echo $OUTPUT->header();
 
 try {
     $output = $PAGE->get_renderer('mod_tipnextcloud');
-    $page = new main_view($cm);
+    $page = new \mod_tipnextcloud\output\main_view($cm);
     echo $output->render($page);
 } catch (\Exception $e) {
     debugging($e->getMessage());
