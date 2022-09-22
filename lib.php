@@ -149,3 +149,44 @@ function tipnextcloud_comment_validate(stdClass $comment_param): bool {
     return true;
 }
 
+
+/**
+ * Serves the resource files.
+ *
+ * @package  mod_resource
+ * @category files
+ * @param stdClass $course course object
+ * @param stdClass $cm course module object
+ * @param stdClass $context context object
+ * @param string $filearea file area
+ * @param array $args extra arguments
+ * @param bool $forcedownload whether or not force download
+ * @param array $options additional options affecting the file serving
+ * @return bool false if file not found, does not return if found - just send the file
+ */
+function tipnextcloud_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+    global $CFG;
+    require_once("$CFG->libdir/resourcelib.php");
+
+    if ($context->contextlevel != CONTEXT_MODULE) {
+        return false;
+    }
+
+    require_course_login($course, true, $cm);
+
+    if (!has_capability('mod/tipnextcloud:view', $context)) {
+        return false;
+    }
+
+    $relativepath = implode('/', $args);
+    $fullpath = "/$context->id/mod_tipnextcloud/intro/0/$relativepath";
+
+    $fs = get_file_storage();
+    if (!$file = $fs->get_file_by_hash(sha1($fullpath)) or $file->is_directory()) {
+        return false;
+    }
+
+    // finally send the file
+    send_stored_file($file, 0, 0, $forcedownload, $options);
+}
+

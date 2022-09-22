@@ -74,10 +74,23 @@ class mod_tipnextcloud_mod_form extends moodleform_mod {
         $mform->addElement('select', 'type', get_string('type', 'mod_tipnextcloud'), $typeoptions);
         $mform->addHelpButton('type', 'type', 'mod_tipnextcloud');
 
+        $mform->addElement('static', 'helpurl', get_string('file_url_help2', 'mod_tipnextcloud'));
+
         $mform->addElement('url', 'url', get_string('file_url', 'mod_tipnextcloud'),
             array('size' => '60'), array('usefilepicker' => false));
         $mform->addHelpButton('url', 'file_url', 'mod_tipnextcloud');
+        $mform->setType('url', PARAM_RAW_TRIMMED);
         $mform->addRule('url', null, 'required', null, 'client');
+
+        if (get_config('tipnextcloud', 'host_nextcloud_enabled')) {
+            $validateurl = function($val) {
+                $host = get_config('tipnextcloud', 'host_nextcloud');
+                return strpos($val, $host) !== false;
+            };
+            $mform->addRule('url',
+                get_string('error_url', 'mod_tipnextcloud'),
+                'callback', $validateurl, 'server');
+        }
 
         $mform->addElement('hidden', 'userid', $USER->id);
         $mform->setType('userid', PARAM_INT);

@@ -28,6 +28,8 @@ defined('MOODLE_INTERNAL') || die();
 $string['pluginname'] = 'TIP NextCloud';
 $string['modulename'] = 'TIP NextCloud';
 $string['modulenameplural'] = 'Archivos NextCloud';
+$string['generalheading'] = 'Configuració General';
+$string['generalheadingdesc'] = 'Paràmetres generals del plugin';
 $string['missingidandcmid'] = 'Mòdul del curs no trobat';
 $string['nonewmodules'] = 'No hi ha nous Mòduls';
 $string['pluginadministration'] = 'Administració TIP Nextcloud';
@@ -39,4 +41,14 @@ $string['type_file'] = 'Fitxer';
 $string['type_folder'] = 'Carpeta';
 $string['file_url'] = 'URL del fitxer a NextCloud';
 $string['file_url_help'] = "Copieu i enganxeu l'enllaç de la URL del fitxer o carpeta de NextCloud";
+$string['file_url_help2'] = "<p>Per copiar l'URL:</p><ul>
+<li>Has d'anar al fitxer o carpeta a NextCloud</li>
+<li>Fer clic a la icona de compartir (Shared)</li>
+<li>Fer clic a internallink</li>
+<li>Compartir amb el grup o les persones que consideris</li></ul>";
 $string['url_button'] = 'Veure {$a} a NextCloud';
+$string['error_url'] = 'La URL no és vàlida, ha de pertànyer al mateix dominio';
+$string['host_nextcloud_enabled'] = 'Validació URL';
+$string['host_nextcloud_enabled_desc'] = "Si està activat, només funcionaran URL d'un domini";
+$string['host_nextcloud'] = 'Domini NextCloud';
+$string['host_nextcloud_desc'] = 'Domini del NextCloud permès a la URL. Ex: https://nextcloud.dd.3ip.eu';

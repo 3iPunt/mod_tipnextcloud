@@ -25,6 +25,7 @@
 namespace mod_tipnextcloud;
 
 use coding_exception;
+use context_module;
 use dml_exception;
 use stdClass;
 
@@ -78,8 +79,18 @@ class tipnextcloud  {
      * @return string
      */
     public function get_description(): string {
+        $context = context_module::instance($this->cm->id);
         if (isset($this->instance)) {
-            return $this->instance->intro;
+
+            $introrewrite = file_rewrite_pluginfile_urls(
+                $this->instance->intro,
+                'pluginfile.php',
+                $context->id,
+                'mod_tipnextcloud',
+                'intro',
+                null);
+
+            return format_text($introrewrite, FORMAT_HTML, array('filter' => true));
         } else {
             return '';
         }

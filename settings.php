@@ -31,4 +31,12 @@ if ($ADMIN->fulltree) {
         get_string('generalheading', 'mod_tipnextcloud'),
         get_string('generalheadingdesc', 'mod_tipnextcloud')));
 
+    $settings->add(new admin_setting_configcheckbox('tipnextcloud/host_nextcloud_enabled',
+        get_string('host_nextcloud_enabled', 'mod_tipnextcloud'),
+        get_string('host_nextcloud_enabled_desc', 'mod_tipnextcloud'), 0));
+
+    $settings->add(new admin_setting_configtext('tipnextcloud/host_nextcloud',
+        get_string('host_nextcloud', 'mod_tipnextcloud'),
+        get_string('host_nextcloud_desc', 'mod_tipnextcloud'), 'https://nextcloud.dd.3ip.eu'));
+
 }

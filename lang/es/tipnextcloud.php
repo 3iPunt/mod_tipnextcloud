@@ -28,6 +28,8 @@ defined('MOODLE_INTERNAL') || die();
 $string['pluginname'] = 'TIP NextCloud';
 $string['modulename'] = 'TIP NextCloud';
 $string['modulenameplural'] = 'Archivos NextCloud';
+$string['generalheading'] = 'Configuración General';
+$string['generalheadingdesc'] = 'Parámetros generales del plugin';
 $string['missingidandcmid'] = 'Módulo del curso no encontrado';
 $string['nonewmodules'] = 'No existen nuevos Módulos';
 $string['pluginadministration'] = 'Administración TIP Nextcloud';
@@ -38,5 +40,15 @@ $string['type_help'] = 'Seleccionar el tipo de recurso: archivo o carpeta';
 $string['type_file'] = 'Archivo';
 $string['type_folder'] = 'Carpeta';
 $string['file_url'] = 'URL del archivo en NextCloud';
-$string['file_url_help'] = 'Copie y pegue el enlace de la URL del archivo o carpeta de NextCloud';
+$string['file_url_help'] = 'Copie y pegue el enlace de la URL del archivo o carpeta de NextCloud.';
+$string['file_url_help2'] = '<p>Para copiar la URL:</p><ul>
+<li>Debes ir al archivo o carpeta en NextCloud</li>
+<li>Hacer clic en el icono de compartir (Shared)</li>
+<li>Hacer clic en internallink</li>
+<li>Compartir con el grupo o personas que consideres</li></ul>';
 $string['url_button'] = 'Ver {$a} en NextCloud';
+$string['error_url'] = 'La URL no es válida, debe pertenecer al mismo dominio';
+$string['host_nextcloud_enabled'] = 'Validación URL';
+$string['host_nextcloud_enabled_desc'] = 'Si está activado, solo funcionarán URL de un dominio';
+$string['host_nextcloud'] = 'Dominio NextCloud';
+$string['host_nextcloud_desc'] = 'Dominio del NextCloud permitido en la URL. Ej: https://nextcloud.dd.3ip.eu';
