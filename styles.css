@@ -14,13 +14,13 @@
 
 #mod-tipnextcloud-main-view #file_nextcloud_iframe {
     position: relative;
-    top: -128px;
+    top: -126px;
     border: 2px solid #ebebeb;
 }
 
 #mod-tipnextcloud-main-view .hide_header {
     background-color: #fff;
-    height: 76px;
+    height: 50px;
     position: relative;
     top: -76px;
     z-index: 10;
@@ -28,4 +28,17 @@
 
 #mod-tipnextcloud-main-view #file_url_button {
     z-index: 100;
+    align-self: flex-end;
+    position: relative;
+    top: 13px;
+}
+
+#mod-tipnextcloud-main-view #file_url_button>a {
+    font-size: 9px;
+    background-color: white;
+}
+
+#mod-tipnextcloud-main-view #file_url_button>a:hover {
+    background-color: grey;
+    color: white;
 }
