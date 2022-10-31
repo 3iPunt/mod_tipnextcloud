@@ -25,16 +25,16 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'TIP NextCloud';
-$string['modulename'] = 'TIP NextCloud';
-$string['modulenameplural'] = 'Archivos NextCloud';
+$string['pluginname'] = 'Nube y archivos';
+$string['modulename'] = 'Nube y archivos';
+$string['modulenameplural'] = 'Nube y archivos';
 $string['generalheading'] = 'Configuración General';
 $string['generalheadingdesc'] = 'Parámetros generales del plugin';
 $string['missingidandcmid'] = 'Módulo del curso no encontrado';
 $string['nonewmodules'] = 'No existen nuevos Módulos';
-$string['pluginadministration'] = 'Administración TIP Nextcloud';
+$string['pluginadministration'] = 'Administración Nube y archivos';
 $string['tipnextcloud:addinstance'] = 'Añadir instancia TIP Nextcloud';
-$string['tipnextcloud:view'] = 'Ver TIP Nextcloud';
+$string['tipnextcloud:view'] = 'Ver Nube y archivos';
 $string['type'] = 'Tipo';
 $string['type_help'] = 'Seleccionar el tipo de recurso: archivo o carpeta';
 $string['type_file'] = 'Archivo';
