@@ -25,16 +25,16 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'TIP NextCloud';
-$string['modulename'] = 'TIP NextCloud';
+$string['pluginname'] = 'Núvol i fitxers';
+$string['modulename'] = 'Núvol i fitxers';
 $string['modulenameplural'] = 'Archivos NextCloud';
 $string['generalheading'] = 'Configuració General';
 $string['generalheadingdesc'] = 'Paràmetres generals del plugin';
 $string['missingidandcmid'] = 'Mòdul del curs no trobat';
 $string['nonewmodules'] = 'No hi ha nous Mòduls';
-$string['pluginadministration'] = 'Administració TIP Nextcloud';
-$string['tipnextcloud:addinstance'] = 'Afegir instància TIP Nextcloud';
-$string['tipnextcloud:view'] = 'Veure TIP Nextcloud';
+$string['pluginadministration'] = 'Administració Núvol i fitxers';
+$string['tipnextcloud:addinstance'] = 'Afegir instància Núvol i fitxers';
+$string['tipnextcloud:view'] = 'Veure Núvol i fitxers';
 $string['type'] = 'Tipus';
 $string['type_help'] = 'Seleccionar el tipus de recurs: fitxer o carpeta';
 $string['type_file'] = 'Fitxer';

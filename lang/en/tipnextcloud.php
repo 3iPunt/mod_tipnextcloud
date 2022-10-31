@@ -25,14 +25,14 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'TIP NextCloud';
-$string['modulename'] = 'TIP NextCloud';
-$string['modulenameplural'] = 'NextCloud Files';
+$string['pluginname'] = 'Cloud and files';
+$string['modulename'] = 'Cloud and files';
+$string['modulenameplural'] = 'Cloud and files';
 $string['generalheading'] = 'General configuration';
 $string['generalheadingdesc'] = 'General plugin parameters';
 $string['missingidandcmid'] = 'Course module not found';
 $string['nonewmodules'] = 'There are no new Modules';
-$string['pluginadministration'] = 'Administration TIP Nextcloud';
+$string['pluginadministration'] = 'Administration Cloud and files';
 $string['tipnextcloud:addinstance'] = 'Add TIP Nextcloud instance';
 $string['tipnextcloud:view'] = 'View TIP Nextcloud';
 $string['type'] = 'Type';
