@@ -52,3 +52,7 @@ $string['host_nextcloud_enabled'] = 'Validació URL';
 $string['host_nextcloud_enabled_desc'] = "Si està activat, només funcionaran URL d'un domini";
 $string['host_nextcloud'] = 'Domini NextCloud';
 $string['host_nextcloud_desc'] = 'Domini del NextCloud permès a la URL. Ex: https://nextcloud.dd.3ip.eu';
+$string['user_nextcloud'] = 'Usuari NextCloud';
+$string['password_nextcloud'] = 'Contrasenya NextCloud';
+$string['autocreate_enabled'] = 'Creació de Mòdul automàtic en Recurs';
+$string['autocreate_enabled_desc'] = 'Si està activat, es crearà un mòdul TIP NextCloud automàtics en crear un mòdul Recurs de Moodle';

@@ -52,3 +52,7 @@ $string['host_nextcloud_enabled'] = 'URL validation';
 $string['host_nextcloud_enabled_desc'] = 'If enabled, only URLs from one domain will work';
 $string['host_nextcloud'] = 'Domain NextCloud';
 $string['host_nextcloud_desc'] = 'NextCloud domain allowed in the URL. Ex: https://nextcloud.dd.3ip.eu';
+$string['user_nextcloud'] = 'User NextCloud';
+$string['password_nextcloud'] = 'Password NextCloud';
+$string['autocreate_enabled'] = 'Automatic Module Creation in Resource';
+$string['autocreate_enabled_desc'] = 'If enabled, a NextCloud TIP module will be created automatically when creating a Moodle Resource module';

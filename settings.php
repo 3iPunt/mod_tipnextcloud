@@ -39,4 +39,15 @@ if ($ADMIN->fulltree) {
         get_string('host_nextcloud', 'mod_tipnextcloud'),
         get_string('host_nextcloud_desc', 'mod_tipnextcloud'), 'https://nextcloud.dd.3ip.eu'));
 
+    $settings->add(new admin_setting_configtext('tipnextcloud/user_nextcloud',
+        new lang_string('user_nextcloud', 'mod_tipnextcloud'),
+        '', ''));
+
+    $settings->add(new admin_setting_configpasswordunmask('tipnextcloud/password_nextcloud',
+        new lang_string('password_nextcloud', 'mod_tipnextcloud'),
+        '', ''));
+
+    $settings->add(new admin_setting_configcheckbox('tipnextcloud/autocreate_enabled',
+        get_string('autocreate_enabled', 'mod_tipnextcloud'),
+        get_string('autocreate_enabled_desc', 'mod_tipnextcloud'), 0));
 }

@@ -11,6 +11,7 @@
                 <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Name"/>
                 <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="User ID creator"/>
                 <FIELD NAME="type" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Type Enum (0: File, 1: Folder)"/>
+                <FIELD NAME="ncid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="NextCloud FILE ID"/>
                 <FIELD NAME="url" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="URL file ol folder in NextCloud."/>
                 <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Activity description."/>
                 <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The format of the intro field."/>
