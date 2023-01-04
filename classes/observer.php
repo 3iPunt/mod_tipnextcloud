@@ -54,14 +54,18 @@ class mod_tipnextcloud_observer {
         if (get_config('tipnextcloud', 'autocreate_enabled') == true) {
             try {
                 if ($event->other['modulename'] === 'resource') {
-                    list($course, $cm) = get_course_and_cm_from_instance($event->other['instanceid'], 'resource');
+                    list($course, $cm) = get_course_and_cm_from_instance(
+                        $event->other['instanceid'], 'resource');
                     $f = self::get_file_cm($cm);
                     $nc = new nextcloud();
-                    $filename = self::upload_file_nc($nc, $f, $cm);
+                    $tfncid = self::create_teacherfolder_nc($course, $nc);
+                    self::shared_folder($course, $nc);
+                    self::create_teacher_folder($course, $nc, $tfncid);
+                    $filename = self::upload_file_nc($nc, $f, $cm, $course);
                     self::shared($nc, $filename);
-                    $ncid = self::get_ncid($nc, $filename);
+                    $ncid = self::get_ncid($nc, $course->id . '/' . $filename);
                     $url = self::get_url_file_nc($nc, $ncid);
-                    self::create_tipnextcloud($course, $cm, $url, $ncid);
+                    self::create_tipnc($course, $cm, $url, $ncid);
                     self::disable_resource($cm);
                 }
             } catch (moodle_exception $e) {
@@ -70,6 +74,56 @@ class mod_tipnextcloud_observer {
         }
 
         return true;
+    }
+
+    /**
+     * Create Teacher Folder.
+     *
+     * @param stdClass $course
+     * @param nextcloud $nc
+     * @return int
+     * @throws moodle_exception
+     */
+    protected static function create_teacherfolder_nc(stdClass $course, nextcloud $nc): int {
+        $res = $nc->creating_folder(nextcloud::PATH);
+        if (!$res) {
+            throw new moodle_exception(
+                'NEXTCLOUD CREATING FOLDER "CARPETA DEL CURS" [' .
+                $res->error->code . ']: ' . $res->error->message);
+        }
+        $res = $nc->creating_folder(nextcloud::PATH . '/' . $course->id);
+        if (!$res) {
+            throw new moodle_exception(
+                'NEXTCLOUD CREATING COURSE FOLDER "' . $course->id . '" [' .
+                $res->error->code . ']: ' . $res->error->message);
+        }
+        return self::get_ncid($nc, $course->id);
+    }
+
+    /**
+     * Create Teacher Folder.
+     *
+     * @param stdClass $course
+     * @param nextcloud $nc
+     * @param int $ncid
+     * @throws coding_exception
+     * @throws dml_exception
+     */
+    protected static function create_teacher_folder(stdClass $course, nextcloud $nc, int $ncid) {
+        global $DB;
+
+        $idnumber = 'TEACHER_FOLDER_' . $course->id . '_' . $ncid;
+
+        $teacherfolder = $DB->get_record('course_modules',
+            ['course' => $course->id, 'idnumber' => $idnumber]);
+
+        if (!$teacherfolder) {
+            $url = self::get_url_file_nc($nc, $ncid);
+
+            self::create_tipnextcloud(
+                $course, 'Carpeta del Curs', '', $idnumber, $url,
+                0, false, $ncid, false);
+        }
     }
 
     /**
@@ -86,6 +140,25 @@ class mod_tipnextcloud_observer {
     /**
      * Shared.
      *
+     * @param stdClass $course
+     * @param nextcloud $nc
+     * @throws moodle_exception
+     */
+    protected static function shared_folder(stdClass $course, nextcloud $nc) {
+        global $USER;
+        $teacher = $USER->username;
+        $res = $nc->set_permission('/' . nextcloud::PATH . '/'
+            . $course->id, $teacher, nextcloud::PERMISSION_ALL);
+        if (!$res) {
+            throw new moodle_exception(
+                'NEXTCLOUD FOLDER SHARED [' .
+                $res->error->code . ']: ' . $res->error->message);
+        }
+    }
+
+    /**
+     * Shared.
+     *
      * @param nextcloud $nc
      * @param string $filename
      * @throws moodle_exception
@@ -97,7 +170,7 @@ class mod_tipnextcloud_observer {
             . $filename, $teacher, nextcloud::PERMISSION_ALL);
         if (!$res) {
             throw new moodle_exception(
-                'NEXTCLOUD SHARED [' .
+                'NEXTCLOUD FILE SHARED [' .
                 $res->error->code . ']: ' . $res->error->message);
         }
     }
@@ -160,11 +233,13 @@ class mod_tipnextcloud_observer {
      * @param nextcloud $nc
      * @param stored_file $f
      * @param cm_info $cm
+     * @param stdClass $course
+     * @return string
      * @throws moodle_exception
      */
-    protected static function upload_file_nc(nextcloud $nc, stored_file $f, cm_info $cm): string {
+    protected static function upload_file_nc(nextcloud $nc, stored_file $f, cm_info $cm, stdClass $course): string {
         $filename = $cm->id . '_' . time()  . '_' . str_replace(' ', '', $f->get_filename());
-        $res = $nc->upload_file($filename, $f);
+        $res = $nc->upload_file($filename, $f, $course);
         if ($res->success) {
             return $filename;
         } else {
@@ -182,19 +257,42 @@ class mod_tipnextcloud_observer {
      * @throws coding_exception
      * @throws dml_exception
      */
-    protected static function create_tipnextcloud(stdClass $course, cm_info $cm, string $url, int $ncid) {
+    protected static function create_tipnc(stdClass $course, cm_info $cm, string $url, int $ncid) {
         global $DB;
         $instance = $DB->get_record(
             'resource', ['id' => $cm->instance], '*' , MUST_EXIST);
 
+        self::create_tipnextcloud(
+            $course, $cm->name, $instance->intro, $ncid, $url,
+            $cm->sectionnum, $cm->visible, $ncid, $cm->showdescription);
+    }
+
+    /**
+     * Create TIP NextCloud.
+     *
+     * @param stdClass $course
+     * @param string $name
+     * @param string $intro
+     * @param string $idnumber
+     * @param string $url
+     * @param int $sectionnum
+     * @param bool $visible
+     * @param int|null $ncid
+     * @param bool $showdescription
+     * @throws coding_exception
+     */
+    protected static function create_tipnextcloud(
+        stdClass $course, string $name, string $intro, string $idnumber, string $url, int $sectionnum,
+        bool $visible, int $ncid = null, bool $showdescription = false) {
         $generator = phpunit_util::get_data_generator();
         /** @var mod_tipnextcloud_generator $modgenerator */
         $modgenerator = $generator->get_plugin_generator('mod_tipnextcloud');
 
         $record = [
             'course' => $course,
-            'name' => $cm->name,
-            'intro' => !empty($instance->intro) ? $instance->intro : ' ',
+            'name' => $name,
+            'idnumber' => $idnumber,
+            'intro' => !empty($intro) ? $intro : ' ',
             'introformat' => FORMAT_HTML,
             'files' => file_get_unused_draft_itemid(),
             'url' => $url,
@@ -202,11 +300,11 @@ class mod_tipnextcloud_observer {
         ];
 
         $options = [
-            'section' => $cm->sectionnum,
-            'visible' => $cm->visible,
-            'showdescription' => $cm->showdescription
+            'section' => $sectionnum,
+            'visible' => $visible,
+            'showdescription' => $showdescription
         ];
-        $res = $modgenerator->create_instance($record, $options);
+        $modgenerator->create_instance($record, $options);
     }
 
 }

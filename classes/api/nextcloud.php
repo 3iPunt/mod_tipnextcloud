@@ -38,7 +38,7 @@ use stored_file;
  */
 class nextcloud {
 
-    const PATH = 'MoodleResources';
+    const PATH = 'CarpetaDelCurs';
 
     const SHARE_TYPE_USER = 0;
     const PERMISSION_READ = 1;
@@ -69,24 +69,23 @@ class nextcloud {
     }
 
     /**
-     * Upload File.
+     * Creating Folder.
      *
-     * @param string $filename
-     * @param stored_file $f
+     * @param string $foldername
      * @return response
      */
-    public function upload_file(string $filename, stored_file $f): response {
+    public function creating_folder(string $foldername): response {
         $curl = new curl();
-        $url = $this->host . '/remote.php/dav/files/' . $this->user . '/' . self::PATH . '/' . $filename . '?format=json';
+        $url = $this->host . '/remote.php/dav/files/' . $this->user . '/' . $foldername . '?format=json';
         $headers = array();
         $headers[] = "Content-type: application/json";
         $headers[] = "OCS-APIRequest: true";
         $curl->setHeader($headers);
-        $params = ['file' => $f];
+        $params = [];
         try {
-            $curl->post($url, $params, $this->get_options_curl('PUT'));
+            $curl->post($url, $params, $this->get_options_curl('MKCOL'));
             $response = $curl->getResponse();
-            if ($response['HTTP/1.1'] === '201 Created' || $response['HTTP/1.1'] === '204 No Content') {
+            if ($response['HTTP/1.1'] === '201 Created' || $response['HTTP/1.1'] === '405 Method Not Allowed') {
                 $response = new response(true, '');
             } else {
                 if (!empty($response['HTTP/1.1'])) {
@@ -99,6 +98,43 @@ class nextcloud {
         } catch (\Exception $e) {
             $response = new response(false, null,
                 new error('0100', $e->getMessage()));
+        }
+        return $response;
+    }
+
+    /**
+     * Upload File.
+     *
+     * @param string $filename
+     * @param stored_file $f
+     * @param stdClass $course
+     * @return response
+     */
+    public function upload_file(string $filename, stored_file $f, stdClass $course): response {
+        $curl = new curl();
+        $url = $this->host . '/remote.php/dav/files/' . $this->user .
+            '/' . self::PATH . '/' . $course->id .'/'. $filename . '?format=json';
+        $headers = array();
+        $headers[] = "Content-type: application/json";
+        $headers[] = "OCS-APIRequest: true";
+        $curl->setHeader($headers);
+        $params = $f->get_content();
+        try {
+            $curl->post($url, $params, $this->get_options_curl('PUT'));
+            $response = $curl->getResponse();
+            if ($response['HTTP/1.1'] === '201 Created' || $response['HTTP/1.1'] === '204 No Content') {
+                $response = new response(true, '');
+            } else {
+                if (!empty($response['HTTP/1.1'])) {
+                    $response = new response(false, null, new error('0201', $response['HTTP/1.1']));
+                } else {
+                    $response = new response(false, null, new error('0202',
+                        json_encode($response, JSON_PRETTY_PRINT)));
+                }
+            }
+        } catch (\Exception $e) {
+            $response = new response(false, null,
+                new error('0200', $e->getMessage()));
         }
         return $response;
     }
@@ -154,7 +190,7 @@ class nextcloud {
             $xml = simplexml_load_string($xml);
             if ($xml === false) {
                 $response = new response(
-                    false, null, new error('0202', 'XML has errors'));
+                    false, null, new error('0302', 'XML has errors'));
                 return $response;
             }
             if (isset($xml->response->propstat->prop->fileid)) {
@@ -162,11 +198,11 @@ class nextcloud {
                 $response = new response(true, $fileid);
             } else {
                 $response = new response(
-                    false, null, new error('0201', 'The FileID could not be retrieved'));
+                    false, null, new error('0301', 'The FileID could not be retrieved'));
             }
         } catch (\Exception $e) {
             $response = new response(false, null,
-                new error('0200', $e->getMessage()));
+                new error('0300', $e->getMessage()));
         }
         return $response;
     }
@@ -199,19 +235,19 @@ class nextcloud {
                 if (isset($res['ocs']['data']['id'])) {
                     $response = new response(true, $res['ocs']['data']['id']);
                 } else {
-                    $response = new response(false, null, new error('0302', 'Respuesta no esperada'));
+                    $response = new response(false, null, new error('0402', 'Respuesta no esperada'));
                 }
             } else {
                 if (!empty($response['HTTP/1.1'])) {
-                    $response = new response(false, null, new error('0301', $response['HTTP/1.1']));
+                    $response = new response(false, null, new error('0401', $response['HTTP/1.1']));
                 } else {
-                    $response = new response(false, null, new error('0303',
+                    $response = new response(false, null, new error('0403',
                         json_encode($response, JSON_PRETTY_PRINT)));
                 }
             }
         } catch (\Exception $e) {
             $response = new response(false, null,
-                new error('0300', $e->getMessage()));
+                new error('0400', $e->getMessage()));
         }
         return $response;
     }
