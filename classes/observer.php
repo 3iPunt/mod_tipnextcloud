@@ -183,7 +183,7 @@ class mod_tipnextcloud_observer {
      * @return string
      */
     protected static function get_url_file_nc(nextcloud $nc, int $ncid): string {
-        return $nc->host . '/f/' . $ncid;
+        return $nc->url . '/f/' . $ncid;
     }
 
     /**

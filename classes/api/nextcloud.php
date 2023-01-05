@@ -46,10 +46,13 @@ class nextcloud {
     const PERMISSION_UPDATE = 4;
     const PERMISSION_ALL = 31;
 
-    const TIMEOUT = 30;
+    const TIMEOUT = 10;
 
     /** @var string Host */
     public $host;
+
+    /** @var string URL */
+    public $url;
 
     /** @var string User */
     protected $user;
@@ -64,6 +67,7 @@ class nextcloud {
      */
     public function __construct() {
         $this->host = get_config('tipnextcloud', 'host_nextcloud');
+        $this->url = get_config('tipnextcloud', 'url_nextcloud');
         $this->user = get_config('tipnextcloud', 'user_nextcloud');
         $this->password = get_config('tipnextcloud', 'password_nextcloud');
     }

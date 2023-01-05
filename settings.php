@@ -37,7 +37,11 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_configtext('tipnextcloud/host_nextcloud',
         get_string('host_nextcloud', 'mod_tipnextcloud'),
-        get_string('host_nextcloud_desc', 'mod_tipnextcloud'), 'https://nextcloud.dd.3ip.eu'));
+        get_string('host_nextcloud_desc', 'mod_tipnextcloud'), 'dd-apps-nextcloud-nginx'));
+
+    $settings->add(new admin_setting_configtext('tipnextcloud/url_nextcloud',
+        get_string('url_nextcloud', 'mod_tipnextcloud'),
+        get_string('url_nextcloud_desc', 'mod_tipnextcloud'), 'https://nextcloud.dd.3ip.eu'));
 
     $settings->add(new admin_setting_configtext('tipnextcloud/user_nextcloud',
         new lang_string('user_nextcloud', 'mod_tipnextcloud'),

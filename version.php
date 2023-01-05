@@ -26,6 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_tipnextcloud';
 $plugin->release = '0.0.3';
-$plugin->version = 2023010207;
+$plugin->version = 2023010400;
 $plugin->requires = 2020061504;
 $plugin->maturity = MATURITY_ALPHA;
