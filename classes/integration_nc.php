@@ -69,8 +69,16 @@ class integration_nc {
         global $USER;
         $this->nc = new nextcloud();
         $this->course = $course;
-        $this->coursefolder = str_replace(' ', '-', $course->shortname);
+        $this->set_coursefolder();
         $this->teacher = $USER->username;
+    }
+
+    /**
+     * Set Course Folder.
+     */
+    protected function set_coursefolder() {
+        $coursefolder = str_replace(' ', '-', $this->course->shortname);
+        $this->coursefolder = $this->remove_accents($coursefolder);
     }
 
     /**
@@ -95,11 +103,6 @@ class integration_nc {
      * @throws moodle_exception
      */
     public function upload_file(string $filename, string $content): array {
-        $filename = str_replace(' ', '-', $filename);
-        $filename = str_replace(',', '', $filename);
-        $filename = str_replace('?', '', $filename);
-        $filename = str_replace('¿', '', $filename);
-        $filename = str_replace('&', '', $filename);
         $filename = $this->remove_accents($filename);
         $path = $this->coursefolder . '/' . $filename;
         $res = $this->nc->upload_file_content($path, $content);
@@ -269,6 +272,13 @@ class integration_nc {
      * @return string
      */
     protected function remove_accents($string): string {
+
+        $string = str_replace(' ', '-', $string);
+        $string = str_replace(',', '', $string);
+        $string = str_replace('?', '', $string);
+        $string = str_replace('¿', '', $string);
+        $string = str_replace('&', '', $string);
+
         if ( !preg_match('/[\x80-\xff]/', $string)) {
             return $string;
         }
