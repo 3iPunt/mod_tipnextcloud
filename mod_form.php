@@ -74,13 +74,23 @@ class mod_tipnextcloud_mod_form extends moodleform_mod {
         $mform->addElement('select', 'type', get_string('type', 'mod_tipnextcloud'), $typeoptions);
         $mform->addHelpButton('type', 'type', 'mod_tipnextcloud');
 
-        $mform->addElement('static', 'helpurl', get_string('file_url_help2', 'mod_tipnextcloud'));
+
+        // Adding the "general" fieldset, where all the common settings are shown.
+        $mform->addElement('header', 'uploadfile', get_string('uploadfile', 'mod_tipnextcloud'));
+
+        $typeoptions = [
+            0 => get_string('type_upload_url', 'mod_tipnextcloud'),
+            1 => get_string('type_upload_upload', 'mod_tipnextcloud'),
+        ];
+        $mform->addElement('select', 'type_upload', get_string('type_upload', 'mod_tipnextcloud'), $typeoptions);
+        $mform->addHelpButton('type_upload', 'type_upload', 'mod_tipnextcloud');
+
+        // URL.
 
         $mform->addElement('url', 'url', get_string('file_url', 'mod_tipnextcloud'),
             array('size' => '60'), array('usefilepicker' => false));
         $mform->addHelpButton('url', 'file_url', 'mod_tipnextcloud');
         $mform->setType('url', PARAM_RAW_TRIMMED);
-        $mform->addRule('url', null, 'required', null, 'client');
 
         if (get_config('tipnextcloud', 'host_nextcloud_enabled')) {
             $validateurl = function($val) {
@@ -91,6 +101,18 @@ class mod_tipnextcloud_mod_form extends moodleform_mod {
                 get_string('error_url', 'mod_tipnextcloud'),
                 'callback', $validateurl, 'server');
         }
+
+        $mform->hideIf('helpurl', 'type_upload', 'eq', 1);
+        $mform->hideIf('url', 'type_upload', 'eq', 1);
+        // URL.
+
+        // Upload.
+        $mform->addElement('filepicker', 'ncfile',
+            get_string('ncfile', 'mod_tipnextcloud'), null, ['accepted_types' => '*']);
+        $mform->addHelpButton('ncfile', 'ncfile', 'mod_tipnextcloud');
+        $mform->hideIf('ncfile', 'type_upload', 'eq', 0);
+
+        // Upload.
 
         $mform->addElement('hidden', 'userid', $USER->id);
         $mform->setType('userid', PARAM_INT);

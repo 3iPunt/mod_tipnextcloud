@@ -144,6 +144,43 @@ class nextcloud {
     }
 
     /**
+     * Upload File.
+     *
+     * @param string $filename
+     * @param string $content
+     * @param stdClass $course
+     * @return response
+     */
+    public function upload_file_content(string $filename, string $content): response {
+        $curl = new curl();
+        $url = $this->host . '/remote.php/dav/files/' . $this->user .
+            '/' . self::PATH . '/' . $filename . '?format=json';
+        $headers = array();
+        $headers[] = "Content-type: application/json";
+        $headers[] = "OCS-APIRequest: true";
+        $curl->setHeader($headers);
+        $params = $content;
+        try {
+            $curl->post($url, $params, $this->get_options_curl('PUT'));
+            $response = $curl->getResponse();
+            if ($response['HTTP/1.1'] === '201 Created' || $response['HTTP/1.1'] === '204 No Content') {
+                $response = new response(true, '');
+            } else {
+                if (!empty($response['HTTP/1.1'])) {
+                    $response = new response(false, null, new error('0201', $response['HTTP/1.1']));
+                } else {
+                    $response = new response(false, null, new error('0202',
+                        json_encode($response, JSON_PRETTY_PRINT)));
+                }
+            }
+        } catch (\Exception $e) {
+            $response = new response(false, null,
+                new error('0200', $e->getMessage()));
+        }
+        return $response;
+    }
+
+    /**
      * Listing.
      *
      * @param string $file
@@ -235,19 +272,24 @@ class nextcloud {
             $res = $curl->post($url, json_encode($params), $this->get_options_curl('POST'));
             $res = json_decode($res, true);
             $response = $curl->getResponse();
-            if ($response['HTTP/1.1'] === '200 OK') {
-                if (isset($res['ocs']['data']['id'])) {
-                    $response = new response(true, $res['ocs']['data']['id']);
+            if (isset($response['HTTP/1.1'])) {
+                if ($response['HTTP/1.1'] === '200 OK') {
+                    if (isset($res['ocs']['data']['id'])) {
+                        $response = new response(true, $res['ocs']['data']['id']);
+                    } else {
+                        $response = new response(false, null, new error('0402', 'Respuesta no esperada'));
+                    }
                 } else {
-                    $response = new response(false, null, new error('0402', 'Respuesta no esperada'));
+                    if (!empty($response['HTTP/1.1'])) {
+                        $response = new response(false, null, new error('0401', $response['HTTP/1.1']));
+                    } else {
+                        $response = new response(false, null, new error('0403',
+                            json_encode($response, JSON_PRETTY_PRINT)));
+                    }
                 }
             } else {
-                if (!empty($response['HTTP/1.1'])) {
-                    $response = new response(false, null, new error('0401', $response['HTTP/1.1']));
-                } else {
-                    $response = new response(false, null, new error('0403',
-                        json_encode($response, JSON_PRETTY_PRINT)));
-                }
+                $response = new response(true, null, new error('0404',
+                    json_encode($response, JSON_PRETTY_PRINT)));
             }
         } catch (\Exception $e) {
             $response = new response(false, null,

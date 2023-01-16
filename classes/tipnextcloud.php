@@ -36,7 +36,7 @@ use stdClass;
  * @copyright   2022 Tresipunt - Antonio Manzano <contacte@tresipunt.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class tipnextcloud  {
+class tipnextcloud {
 
     /** @var stdClass Course Module */
     protected $cm;
@@ -103,7 +103,7 @@ class tipnextcloud  {
      */
     public function get_url(): string {
         if (isset($this->instance)) {
-            return $this->instance->url;
+            return isset($this->instance->url) ? $this->instance->url : '';
         } else {
             return '';
         }

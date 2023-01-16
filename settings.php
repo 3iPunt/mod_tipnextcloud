@@ -51,7 +51,4 @@ if ($ADMIN->fulltree) {
         new lang_string('password_nextcloud', 'mod_tipnextcloud'),
         '', ''));
 
-    $settings->add(new admin_setting_configcheckbox('tipnextcloud/autocreate_enabled',
-        get_string('autocreate_enabled', 'mod_tipnextcloud'),
-        get_string('autocreate_enabled_desc', 'mod_tipnextcloud'), 0));
 }

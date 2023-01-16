@@ -25,8 +25,8 @@ defined('MOODLE_INTERNAL') || die();
 
 $observers = array(
     array(
-        'eventname'   => 'core\event\course_module_created',
-        'callback'    => 'mod_tipnextcloud_observer::course_module_created',
+        'eventname'   => 'core\event\course_created',
+        'callback'    => 'mod_tipnextcloud_observer::course_created',
         'priority'    => 100,
         'internal'    => false,
     )

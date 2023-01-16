@@ -22,6 +22,8 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use mod_tipnextcloud\api\nextcloud;
+
 /**
  * Return if the plugin supports $feature.
  *
@@ -60,12 +62,30 @@ function tipnextcloud_supports(string $feature) {
  * @param object $moduleinstance An object from the form.
  * @param mod_tipnextcloud_mod_form $mform The form.
  * @return int The id of the newly inserted record.
- * @throws dml_exception
+ * @throws dml_exception|moodle_exception
  */
 function tipnextcloud_add_instance(object $moduleinstance, $mform = null): int {
-    global $DB;
+    global $DB, $COURSE;
     $moduleinstance->timecreated = time();
-    $moduleinstance->id =$DB->insert_record('tipnextcloud', $moduleinstance);
+
+    try {
+        if (!is_null($mform)) {
+            if (!empty($mform->get_file_content('ncfile'))) {
+                $filename = empty($mform->get_new_filename('ncfile')) ?
+                    'file_' . $moduleinstance->id : $mform->get_new_filename('ncfile');
+                $int = new \mod_tipnextcloud\integration_nc($COURSE);
+                $int->validate_folder_course();
+                $res = $int->upload_file($filename, $mform->get_file_content('ncfile'));
+                $moduleinstance->url = $res['url'];
+                $moduleinstance->ncid = $res['ncid'];
+            }
+        }
+    } catch (\Exception $e) {
+        debugging($e->getMessage());
+    }
+
+    $moduleinstance->id = $DB->insert_record('tipnextcloud', $moduleinstance);
+
     return $moduleinstance->id;
 
 }
@@ -82,9 +102,26 @@ function tipnextcloud_add_instance(object $moduleinstance, $mform = null): int {
  * @throws dml_exception
  */
 function tipnextcloud_update_instance(object $moduleinstance, $mform = null): bool {
-    global $DB;
+    global $DB, $COURSE;
     $moduleinstance->timemodified = time();
     $moduleinstance->id = $moduleinstance->instance;
+
+    try {
+        if (!is_null($mform)) {
+            if (!empty($mform->get_file_content('ncfile'))) {
+                $filename = empty($mform->get_new_filename('ncfile')) ?
+                    'file_' . $moduleinstance->id : $mform->get_new_filename('ncfile');
+                $int = new \mod_tipnextcloud\integration_nc($COURSE);
+                $int->validate_folder_course();
+                $res = $int->upload_file($filename, $mform->get_file_content('ncfile'));
+                $moduleinstance->url = $res['url'];
+                $moduleinstance->ncid = $res['ncid'];
+            }
+        }
+    } catch (\Exception $e) {
+        debugging($e->getMessage());
+    }
+
     $DB->update_record('tipnextcloud', $moduleinstance);
     return true;
 }

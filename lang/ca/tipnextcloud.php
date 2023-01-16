@@ -40,8 +40,7 @@ $string['type_help'] = 'Seleccionar el tipus de recurs: fitxer o carpeta';
 $string['type_file'] = 'Fitxer';
 $string['type_folder'] = 'Carpeta';
 $string['file_url'] = 'URL del fitxer a NextCloud';
-$string['file_url_help'] = "Copieu i enganxeu l'enllaç de la URL del fitxer o carpeta de NextCloud";
-$string['file_url_help2'] = "<p>Per copiar l'URL:</p><ul>
+$string['file_url_help'] = "<p>Per copiar l'URL:</p><ul>
 <li>Has d'anar al fitxer o carpeta a NextCloud</li>
 <li>Fer clic a la icona de compartir (Shared)</li>
 <li>Fer clic a internallink</li>
@@ -58,3 +57,9 @@ $string['user_nextcloud'] = 'Usuari NextCloud';
 $string['password_nextcloud'] = 'Contrasenya NextCloud';
 $string['autocreate_enabled'] = 'Creació de Mòdul automàtic en Recurs';
 $string['autocreate_enabled_desc'] = 'Si està activat, es crearà un mòdul TIP NextCloud automàtics en crear un mòdul Recurs de Moodle';
+$string['uploadfile'] = 'Fitxers NextCloud';
+$string['type_upload'] = "Seleccioneu la manera d'enllaçar fitxers a NextCloud";
+$string['type_upload_help'] = "Si seleccioneu, amb URL, haureu de copiar l'enllaç a NextCloud, i enganxar-lo a l'opció que apareixerà més avall. Si seleccioneu pujada de fitxer des del vostre ordinador, el fitxer pujarà a NextCloud i es vincularà automàticament amb aquest recurs.";$string['type_upload_url'] = "Copiant l'URL d'un fitxer o carpeta existent";
+$string['type_upload_upload'] = 'Pujant fitxer des del teu ordinador';
+$string['ncfile'] = 'Pujar Fitxer a NextCloud';
+$string['ncfile_help'] = 'Busqueu el fitxer al vostre ordinador i pugeu-lo al núvol de NextCloud';
