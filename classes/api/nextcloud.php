@@ -148,7 +148,6 @@ class nextcloud {
      *
      * @param string $filename
      * @param string $content
-     * @param stdClass $course
      * @return response
      */
     public function upload_file_content(string $filename, string $content): response {
