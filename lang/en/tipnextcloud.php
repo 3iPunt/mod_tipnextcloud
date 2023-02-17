@@ -40,8 +40,7 @@ $string['type_help'] = 'Select the type of resource: file or folder';
 $string['type_file'] = 'File';
 $string['type_folder'] = 'Folder';
 $string['file_url'] = 'File URL in NextCloud';
-$string['file_url_help'] = 'Copy and paste the URL link of the NextCloud file or folder';
-$string['file_url_help2'] = '<p>To copy the URL:</p><ul>
+$string['file_url_help'] = '<p>To copy the URL:</p><ul>
 <li>You must go to the file or folder in NextCloud</li>
 <li>Click the share icon (Shared)</li>
 <li>Click on internallink</li>
@@ -51,4 +50,17 @@ $string['error_url'] = 'The URL is not valid, it must belong to the same domain'
 $string['host_nextcloud_enabled'] = 'URL validation';
 $string['host_nextcloud_enabled_desc'] = 'If enabled, only URLs from one domain will work';
 $string['host_nextcloud'] = 'Domain NextCloud';
-$string['host_nextcloud_desc'] = 'NextCloud domain allowed in the URL. Ex: https://nextcloud.dd.3ip.eu';
+$string['host_nextcloud_desc'] = 'NextCloud domain, container name recommended. Ex: dd-apps-nextcloud-nginx';
+$string['url_nextcloud'] = 'URL NextCloud';
+$string['url_nextcloud_desc'] = 'NextCloud URL allowed in the URL. Ex: https://nextcloud.dd.3ip.eu';
+$string['user_nextcloud'] = 'User NextCloud';
+$string['password_nextcloud'] = 'Password NextCloud';
+$string['autocreate_enabled'] = 'Automatic Module Creation in Resource';
+$string['autocreate_enabled_desc'] = 'If enabled, a NextCloud TIP module will be created automatically when creating a Moodle Resource module';
+$string['uploadfile'] = 'NextCloud Files';
+$string['type_upload'] = 'Select the way to link files to NextCloud';
+$string['type_upload_help'] = "If you select, with URL, you will have to copy the link in NextCloud, and paste it in the option that will appear below. If you select file upload from your computer, the file will be uploaded to NextCloud and automatically linked to this resource.";
+$string['type_upload_url'] = 'Copying the URL of an existing file or folder';
+$string['type_upload_upload'] = 'Uploading file from your computer';
+$string['ncfile'] = 'Upload File to NextCloud';
+$string['ncfile_help'] = 'Find the file on your computer and upload it to the NextCloud cloud';
